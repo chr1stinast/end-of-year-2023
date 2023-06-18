@@ -71,13 +71,13 @@ class Bird:
 
         if self.img_count <= self.ANIMATION_TIME:
             self.img = self.IMGS[0]
-        elif self.img_count <= self.ANIMATION_TIME2:
+        elif self.img_count <= self.ANIMATION_TIME*2:
             self.img = self.IMGS[1]
-        elif self.img_count <= self.ANIMATION_TIME3:
+        elif self.img_count <= self.ANIMATION_TIME*3:
             self.img = self.IMGS[2]
-        elif self.img_count <= self.ANIMATION_TIME4:
+        elif self.img_count <= self.ANIMATION_TIME*4:
             self.img = self.IMGS[1]
-        elif self.img_count == self.ANIMATION_TIME4 + 1:
+        elif self.img_count == self.ANIMATION_TIME*4 + 1:
             self.img = self.IMGS[0]
             self.img_count = 0
 
@@ -98,3 +98,23 @@ def blitRotateCenter(surf, image, topleft, angle):
     new_rect = rotated_image.get_rect(center = image.get_rect(topleft = topleft).center)
 
     surf.blit(rotated_image, new_rect.topleft)
+
+def draw_window(win, bird):
+    win.blit(bg_img, (0,0))
+    bird.draw(win)
+    pygame.display.update()
+
+def main():
+    bird = Bird(200,200)
+    win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        draw_window(win, bird)
+
+    pygame.quit()
+    quit()
+
+main()
