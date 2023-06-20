@@ -5,6 +5,7 @@ import time
 import visualize
 import neat
 import pickle
+from pygame import mixer
 pygame.font.init()  
 WIN_WIDTH = 600
 WIN_HEIGHT = 800
@@ -252,7 +253,7 @@ def eval_genomes(genomes, config):
                 pipe_ind = 1                                                                 
 
         for x, bird in enumerate(birds): 
-            ge[x].fitness += 0.1
+            ge[x].fitness += 0.05
             bird.move()
 
             output = nets[birds.index(bird)].activate((bird.y, abs(bird.y - pipes[pipe_ind].height), abs(bird.y - pipes[pipe_ind].bottom)))
@@ -283,7 +284,7 @@ def eval_genomes(genomes, config):
         if add_pipe:
             score += 1
             for genome in ge:
-                genome.fitness += 2
+                genome.fitness += 0.35
             pipes.append(Pipe(WIN_WIDTH))
 
         for r in rem:
@@ -305,13 +306,15 @@ def run(config_file):
                          config_file)
 
     p = neat.Population(config)
-
+    mixer.init()
+    mixer.music.load('Music.wav')
+    mixer.music.set_volume(1)
+    mixer.music.play()
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-
     winner = p.run(eval_genomes, 50)
-
+    mixer.music.queue('Music.wav')
     print('\nBest genome:\n{!s}'.format(winner))
 
 
