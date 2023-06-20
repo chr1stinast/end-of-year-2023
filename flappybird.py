@@ -268,7 +268,7 @@ def eval_genomes(genomes, config):
             pipe.move()
             for bird in birds:
                 if pipe.collide(bird, win):
-                    ge[birds.index(bird)].fitness -= 1
+                    #ge[birds.index(bird)].fitness -= 1
                     nets.pop(birds.index(bird))
                     ge.pop(birds.index(bird))
                     birds.pop(birds.index(bird))
@@ -283,7 +283,7 @@ def eval_genomes(genomes, config):
         if add_pipe:
             score += 1
             for genome in ge:
-                genome.fitness += 5
+                genome.fitness += 2
             pipes.append(Pipe(WIN_WIDTH))
 
         for r in rem:
